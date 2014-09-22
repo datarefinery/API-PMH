@@ -11,7 +11,7 @@ The rationale is to create a harvesting API which is simple to:
 * use/consume 
 
 over either:
-* traditional data stores (SQL), and
+* traditional data stores (SQL), or
 * JSON document stores/indexers.   
 
 
