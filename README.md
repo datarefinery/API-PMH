@@ -9,10 +9,12 @@ API-PMH is a proposal for implementing a 'protocol for metadata harvesting', ins
 The rationale is to create a harvesting API which is simple to:
 * implement
 * use/consume 
+
 over either:
 * traditional data stores (SQL), and
 * JSON document stores/indexers.   
 
 
 Shaun Osborne
+
 Sep2014
