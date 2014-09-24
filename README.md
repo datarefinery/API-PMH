@@ -26,13 +26,23 @@ ListIdentifiers|`<entity>/list`| list all identifiers | return a list of all ent
 ListRecords|`<entity>/get`| get all records | get all records, paging applies |
 GetRecord |`<entity>/<id>`| get record|
 
-### Parameters
+### Requests
 
-fields = will always default to all, but can be limited to specific fields
-version = maybe we want the caller to be able to specify a version
+WIll only be GET as they are read only.
+
+### Request Parameters
+
+fields = will always default to all, but if implement can be used to limited to specific fields
+version = maybe we want the caller to be able to specify our API version?
+limit = default 100 (although have to consider streaming)
 
 ### Standard Reponse packet
-Should include:
+
+HTTP headers should include:
+* mime type (application/json etc)
+* next & previous
+
+JSON response should include:
 * name
 * version
 * next & previous
