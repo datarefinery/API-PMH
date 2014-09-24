@@ -36,7 +36,7 @@ fields = will always default to all, but if implement can be used to limited to 
 version = maybe we want the caller to be able to specify our API version?
 limit = default 100 (although have to consider streaming)
 
-### Standard Reponse packet
+### Reponses
 
 HTTP headers should include:
 * mime type (application/json etc)
