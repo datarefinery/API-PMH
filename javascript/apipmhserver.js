@@ -8,14 +8,13 @@ var routes = require('./routes/api-pmh.js');
 var app = express();
 
 app.use(logger('dev'));     /* 'default', 'short', 'tiny', 'dev' */
-//app.use(bodyParser());
 
  
-app.get('/', function(req, res) {
+app.get('/objects/', function(req, res) {
     res.send('{"name":"test API-PMH"}');
 }); 
-app.get('/object', routes.getAll);
-app.get('/object/:id', routes.getRecord);
+app.get('/objects/all/', routes.getAll);
+app.get('/objects/:id', routes.getRecord);
  
 app.listen(3000);
 console.log('Listening on port 3000...');

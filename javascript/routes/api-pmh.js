@@ -9,7 +9,6 @@ var db_limit = 2000; /* a limit (of records to get) for a getAll call */
 
 
 
-
 var rdb = null;
 r.connect({host: db_host, port: db_port}, function(err, conn) {
 		if (err) { throw err;}
