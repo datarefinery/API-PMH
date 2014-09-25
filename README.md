@@ -1,3 +1,8 @@
+# Contents
+
+* README.md - this file
+* javascript - directory contains an early test implementation of an API-PMH server based on Node, Express.js and RethinkDB
+
 ## API-PMH
 
 API-PMH is a proposal for implementing a 'protocol for metadata harvesting', inspired by [OAI-PMH](http://www.openarchives.org/pmh/), using current technology 'stacks' & practices, including:
@@ -32,9 +37,9 @@ WIll only be GET as they are read only.
 
 ### Request Parameters
 
-fields = will always default to all, but if implement can be used to limited to specific fields
+fields = will always default to all, but if implemented can be used to limited to specific fields
 version = maybe we want the caller to be able to specify our API version?
-limit = default 100 (although have to consider streaming)
+limit = default 2000 (although have to consider how this works with streaming)
 
 ### Reponses
 
