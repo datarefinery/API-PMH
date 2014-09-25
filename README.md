@@ -25,7 +25,7 @@ over either:
 OAI-PMH verb | API-PMH | 'verb' | notes |
 :-------: | :-------: | :-------: | :--------------- |
 Identify | `<entity>/`| identify API | at the root url 'identify' is implied |
-ListSets| `<entity>/set/`| identify sets | set listing (if any)|
+ListSets| `<entity>/sets/`| identify sets | set listing (if any)|
 ListMetadataFormats | `<entity>/` | n/a | formats info should be listed in sets |
 ListIdentifiers|`<entity>/list/`| list all identifiers | return a list of all entity identifiers |
 ListRecords|`<entity>/all`| get all records | get all records, paging applies |
@@ -34,6 +34,17 @@ GetRecord |`<entity>/<id>`| get record|
 ### Requests
 
 WIll only be GET as they are read only.
+
+`<entity>/` identify e.g objects/ 
+(my considered preference is that entity is plural)
+`<entity>/<id>` get record
+`<entity>/list/` list all record `<id>`'s 
+`<entity>/all/` get all records 
+`<entity>/sets/` identify available sets
+`<entity>/sets/<sid>/` get set record  
+`<entity>/sets/<sid>/list/` get all record `<id>`'s in set
+`<entity>/sets/<sid>/all/` get all records in set
+?? `<entity>/sets/<sid>/<id>` would get record in set (is this needed as a test? id set/record could then return 404 if its not valid
 
 ### Request Parameters
 
