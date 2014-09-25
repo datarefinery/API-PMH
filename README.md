@@ -37,13 +37,21 @@ WIll only be GET as they are read only.
 
 `<entity>/` identify e.g objects/ 
 (my considered preference is that entity is plural)
+
 `<entity>/<id>` get record
+
 `<entity>/list/` list all record `<id>`'s 
+
 `<entity>/all/` get all records 
+
 `<entity>/sets/` identify available sets
+
 `<entity>/sets/<sid>/` get set record  
+
 `<entity>/sets/<sid>/list/` get all record `<id>`'s in set
+
 `<entity>/sets/<sid>/all/` get all records in set
+
 ?? `<entity>/sets/<sid>/<id>` would get record in set (is this needed as a test? id set/record could then return 404 if its not valid
 
 ### Request Parameters
