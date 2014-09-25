@@ -25,10 +25,10 @@ over either:
 OAI-PMH verb | API-PMH | 'verb' | notes |
 :-------: | :-------: | :-------: | :--------------- |
 Identify | `<entity>/`| identify API | at the root url 'identify' is implied |
-ListSets| `<entity>/set/`| get set listing | set listing (if any)|
+ListSets| `<entity>/set/`| identify sets | set listing (if any)|
 ListMetadataFormats | `<entity>/` | n/a | formats info should be listed in sets |
-ListIdentifiers|`<entity>/list`| list all identifiers | return a list of all entity identifiers |
-ListRecords|`<entity>/get`| get all records | get all records, paging applies |
+ListIdentifiers|`<entity>/list/`| list all identifiers | return a list of all entity identifiers |
+ListRecords|`<entity>/all`| get all records | get all records, paging applies |
 GetRecord |`<entity>/<id>`| get record|
 
 ### Requests
