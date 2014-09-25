@@ -44,9 +44,9 @@ Will only be HTTP GETs as they are read only.
 
 `<entity>/all/` get all records 
 
-`<entity>/subsets/` identify available sets
+`<entity>/subset/` identify available sub-sets
 
-`<entity>/subset/<sid>/` get set record  
+`<entity>/subset/<sid>/` get sub-set identify record  
 
 `<entity>/subset/<sid>/list/` get all record `<id>`'s in set
 
