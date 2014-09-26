@@ -57,3 +57,7 @@ Observationally it should be quite simple using the current crop of 'noSQL datab
 * [MongoDB](http://www.mongodb.org/) = database/collection
 * [RethinkDB](http://rethinkdb.com/) = database/table
 * [Redis](http://redis.io/) = database/set
+
+
+Shaun Osborne
+Sep2014
