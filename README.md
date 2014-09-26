@@ -29,7 +29,7 @@ Achieving these basic goals would hopefully make API-PMH useful for not only int
 OAI-PMH verb | API-PMH | 'verb' | notes |
 :-------: | :-------: | :-------: | :--------------- |
 Identify | `<entity>/`| identify API | at the root entity url 'identify' is implied |
-ListSets| `<entity>/subset/`| identify sub-sets | subsets listing (if any)|
+ListSets| `<entity>/subset/`| identify subsets | subsets listing (if any)|
 ListMetadataFormats | `<entity>/` | n/a | formats info should be listed in identify at both entity and subset level |
 ListIdentifiers|`<entity>/list/`| list all identifiers | return a list of all entity identifiers (preferably as opendata URIs)|
 ListRecords|`<entity>/all/`| get all records | get all records, paging/sequencing applies |
@@ -71,15 +71,16 @@ size = number of records to return in any one request, default 2000 (although ha
 ### Reponses
 
 HTTP headers should include:
-* mime type (application/json etc)
+* mime/content type (application/json etc)
 * next & previous 'rel links'
 
 JSON response should include:
 
-a section called "apipmh": giving status info incliding:
+a section called "apipmh": giving status info including:
 * name
 * version
 * next & previous 'rel links'
+* values for all 'query requests' (size, format, etc)
 * status (OK/Error)
 
 a section named the same as "`<entity>'": which should always contain an array o records (even if there is only one)
