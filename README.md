@@ -14,12 +14,13 @@ API-PMH is a proposal for implementing an updated 'protocol for metadata harvest
 * to be streaming (and possibly real-time) capable
 
 The rationale is to create a harvesting API which is simple(r) to:
-* implement
 * use/consume
+* implement
 
-over either:
+over:
 * traditional data stores (SQL), or
-* JSON document databases/stores/indexers ('noSQL').  
+* JSON document databases/stores/indexers ('noSQL')
+* and maybe even triplestores
 
 Achieving these basic goals would hopefully make API-PMH useful for not only inter-site 'harvesting', but also efficient enough for intra/inter-system 'middleware' data transport.
 
