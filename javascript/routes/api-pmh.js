@@ -8,12 +8,12 @@ var db_table = 'adlib';
 var db_size = 100; /* number of 'records' to get for a getAll call */
 var page = 0; /* starting page */
 
+/* opan database */
 var rdb = null;
-
-	r.connect({host: db_host, port: db_port}, function(err, conn) {
-			if (err) { throw err;}
-			else{rdb = conn;}
-	});
+r.connect({host: db_host, port: db_port}, function(err, conn) {
+	if (err) { throw err;}
+	else{rdb = conn;}
+});
 
 
 exports.apiHeader = function(req, res, next){

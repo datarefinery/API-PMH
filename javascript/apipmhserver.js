@@ -7,7 +7,6 @@ var routes = require('./routes/api-pmh.js');
 var app = express();
 
 
-//app.use('/objects', routes.router)
 app.use(logger('dev'));     /* 'default', 'short', 'tiny', 'dev' */
 
 app.use(routes.apiHeader);
@@ -17,16 +16,6 @@ app.get('/objects/id/all/', routes.getAll);
 app.get('/objects/id/:id', routes.getRecord);
 
 app.get('/objects/*', routes.identifyAPI); 
-/*function(req, res, next){
-	if(req.path === '/objects/'){
-	    res.status(200).type('json').send(res.Body + ', "status" : "ok" }}');
-	}else{
-		res.status(404).type('json').send(res.Body + 
-			', "status" : "error", "statusMessage" : "not recognised [' + req.path + ']" }}');
-	};
-    //next(); end here..
-});*/
-
 
 
 app.listen(3000);
