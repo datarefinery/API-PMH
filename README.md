@@ -9,7 +9,7 @@
 API-PMH is a proposal for implementing an updated 'protocol for metadata harvesting', inspired by [OAI-PMH](http://www.openarchives.org/pmh/), using current technology 'standards' & practice, including:
 
 * JSON data by default (acknowledging the need to support both schema'd and unstructured data)
-* REST API (based on 'defacto API practices' including accurate HTTP requests/responses, content types, and 'standard' sequencing/paging)
+* REST API (based on 'defacto API practices' including being stateless, using 'correct' HTTP requests/responses, content types, and 'standard' sequencing/paging)
 * a desire for the API to coexist within the opendata permament URI implementations and practice
 * to be streaming (and possibly real-time) capable
 
