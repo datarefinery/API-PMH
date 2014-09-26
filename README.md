@@ -2,14 +2,14 @@
 
 * README.md - this file
 * discussion.md - some background on implementation thoughts
-* javascript - directory contains an early test implementation of an API-PMH server based on Node, Express.js and RethinkDB
+* javascript - directory contains an early test implementation of an API-PMH server based on [Nodejs](http://nodejs.org/), [Expressjs](http://expressjs.com/) and [RethinkDB](http://rethinkdb.com/)
 
 ## API-PMH
 
 API-PMH is a proposal for implementing an updated 'protocol for metadata harvesting', inspired by [OAI-PMH](http://www.openarchives.org/pmh/), using current technology 'standards' & practice, including:
 
 * JSON data by default (acknowledging the need to support both schema'd and unstructured data)
-* REST API (based on 'defacto API practices' including accurate HTTP requests/responses, mime types, and 'standard' sequencing/paging)
+* REST API (based on 'defacto API practices' including accurate HTTP requests/responses, content types, and 'standard' sequencing/paging)
 * a desire for the API to coexist within the opendata permament URI implementations and practice
 * to be streaming (and possibly real-time) capable
 
@@ -63,7 +63,7 @@ fields = will always default to all, but if implemented can be used to limited t
 
 version = maybe we want the caller to be able to specify our API version?
 
-limit = default 2000 (although have to consider how this works with streaming)
+size = number of records to return in any one request, default 2000 (although have to consider how this works with streaming)
 
 ### Reponses
 
