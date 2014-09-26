@@ -7,7 +7,7 @@ var db_host = 'localhost';
 var db_port = '28015';
 var db_db = 'objects';
 var db_table = 'adlib';
-var db_size = 2; /* number of 'records' to get for a getAll call */
+var db_size = 200; /* number of 'records' to get for a getAll call */
 var db_pages = 0;
 
 /* open database */
@@ -27,12 +27,12 @@ exports.apiHeader = function(req, res, next){
 		};
 		db_pages = Math.round(result/db_size);
 		if((db_size % db_pages) != 0){db_pages++;}
-		limit = calculateLimit(req.query.limit, db_size);
+		size = calculatesize(req.query.size, db_size);
 		res.Body = '{ "apipmh" :' +
 		'{"title": "objects API (apipmh)",' +
 		'"records" : '+result+','+
 		'"pages" : '+db_pages+','+
-		'"limit" : '+limit; /* always need to finish off header with next in chain */
+		'"size" : '+size; /* always need to finish off header with next in chain */
 
 		next();
 	});
@@ -74,22 +74,22 @@ exports.getAll = function(req, res, next){
     	var npage = 1;
     	var ppage = -1;
     }
-    /* figure out limit */
-    limit = calculateLimit(req.query.limit, db_size);
-    	console.log(limit);
+    /* figure out size */
+    size = calculatesize(req.query.size, db_size);
+    	console.log(size);
 
-	/* now we have limit and page we can built next/previous and skip values */
-	nexturi = req.path+'?page='+npage;
+	/* now we have size and page we can built next/previous and skip values */
+	nexturi = api_host+req.path+'?page='+npage;
 	if(ppage < 0){
 		prevuri = '';
 	}else{
-		prevuri = req.path+'?page='+ppage;
+		prevuri = api_host+req.path+'?page='+ppage;
 	}
-	skip = page*limit;
+	skip = page*size;
 /* ok we've got all the pagination goodies now make the db call */	
 	r.db(db_db).table(db_table).
 	pluck('id', 'priref', 'object_number', 'object_category', 'object_name').
-	skip(skip).limit(limit).
+	skip(skip).limit(size).
 	run(rdb, function(err, cursor){
 		if(err){
 			throw err;
@@ -98,10 +98,10 @@ exports.getAll = function(req, res, next){
 			if(err){
 				throw err;
 			}
-			res.set("next", api_host+nexturi).set("prev", api_host+prevuri).status(200).type('json').send(res.Body+
+			res.set("next", nexturi).set("prev", prevuri).status(200).type('json').send(res.Body+
 				', "status" : "ok", "next" : "'+
-				api_host+nexturi+'" , "prev" : "'+
-				api_host+prevuri+'"} ,"objects" : '
+				nexturi+'" , "prev" : "'+
+				prevuri+'"} ,"objects" : '
 				+JSON.stringify(result)+'}');
 			//next(); end here do not chain onwards
 		});
@@ -118,13 +118,13 @@ exports.identifyAPI = function(req, res, next){
     //next(); end here..
 }; 
 
-var calculateLimit = function(limit, max){
-	console.log(limit,max);
-	if(limit){
-		if(limit > max){
+var calculatesize = function(size, max){
+	console.log(size,max);
+	if(size){
+		if(size > max){
 		return max;
 		}else{
-		return limit;	
+		return size;	
 		};
 	}
 	return max;

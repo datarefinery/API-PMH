@@ -66,7 +66,7 @@ version = maybe we want the caller to be able to specify our API version?
 
 size = number of records to return in any one request, default 2000 (although have to consider how this works with streaming)
 
-?? page = page to get from the larger sequence (?? is about what term to use here)
+page = page to get from the larger sequence
 
 ### Reponses
 
@@ -84,7 +84,7 @@ a section called "apipmh": giving status info including:
 * next & previous 'rel links'
 * values for all 'query requests' (size, format, etc)
 * status (OK/Error)
-* statustext
+* statusMessage
 
 optional but useful:
 * records (total records)
@@ -97,8 +97,13 @@ e.g. a call to /objects/all/ would return something similar to:
 ```javascript
 {
 "apipmh": {
-	value1: "",
-	value2: ""
+	"title": "objects API (apipmh)",
+    "records": 198033,
+    "pages": 991,
+    "size": 200,
+    "status": "ok",
+    "next": "http://localhost:3000/objects/id/all/?page=6",
+    "prev": "http://localhost:3000/objects/id/all/?page=4"
 	}
 
 objects:[
