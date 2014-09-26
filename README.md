@@ -1,6 +1,7 @@
 # Contents
 
 * README.md - this file
+* discussion.md - some background on implementation thoughts
 * javascript - directory contains an early test implementation of an API-PMH server based on Node, Express.js and RethinkDB
 
 ## API-PMH
