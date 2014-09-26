@@ -87,14 +87,24 @@ a section named the same as "`<entity>`": which should always contain an array o
 
 e.g. a call to /objects/all/ would return something similar to:
 '{
-"apipmh": {
+
+"apipmh": 
+
+{
 	value1: "",
+
 	value2: ""
+
 	}
+
 objects:[
+
 	{ values },
+
 	{ values },
+
 	{ values }
+
 ]
 	
 }'
