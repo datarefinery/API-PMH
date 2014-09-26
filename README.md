@@ -1,7 +1,7 @@
 # Contents
 
 * README.md - this file
-* discussion.md - some background on implementation thoughts
+* [discussion.md](https://github.com/museums-io/API-PMH/blob/master/discussion.md) - some background on implementation thoughts
 * javascript - directory contains an early test implementation of an API-PMH server based on [Nodejs](http://nodejs.org/), [Expressjs](http://expressjs.com/) and [RethinkDB](http://rethinkdb.com/)
 
 ## API-PMH
@@ -19,19 +19,19 @@ The rationale is to create a harvesting API which is simple(r) to:
 
 over either:
 * traditional data stores (SQL), or
-* JSON document databases/stores/indexers.  
+* JSON document databases/stores/indexers ('noSQL').  
 
-Achieving these basic goals would hopefully make API-PMH useful for not only inter-site 'harvesting' but also efficient enough for intra/inter-system 'middleware' data transport.
+Achieving these basic goals would hopefully make API-PMH useful for not only inter-site 'harvesting', but also efficient enough for intra/inter-system 'middleware' data transport.
 
 ### Equivalence Table
 
 OAI-PMH verb | API-PMH | 'verb' | notes |
 :-------: | :-------: | :-------: | :--------------- |
-Identify | `<entity>/`| identify API | at the root url 'identify' is implied |
-ListSets| `<entity>/subset/`| identify sub-sets | sub-sets listing (if any)|
-ListMetadataFormats | `<entity>/` | n/a | formats info should be listed in sets |
-ListIdentifiers|`<entity>/list/`| list all identifiers | return a list of all entity identifiers |
-ListRecords|`<entity>/all`| get all records | get all records, paging applies |
+Identify | `<entity>/`| identify API | at the root entity url 'identify' is implied |
+ListSets| `<entity>/subset/`| identify sub-sets | subsets listing (if any)|
+ListMetadataFormats | `<entity>/` | n/a | formats info should be listed in identify at both entity and subset level |
+ListIdentifiers|`<entity>/list/`| list all identifiers | return a list of all entity identifiers (preferably as opendata URIs)|
+ListRecords|`<entity>/all/`| get all records | get all records, paging/sequencing applies |
 GetRecord |`<entity>/<id>`| get record|
 
 ### Requests
@@ -59,23 +59,30 @@ Will only be HTTP GETs as they are read only.
 
 ### Request Parameters
 
-fields = will always default to all, but if implemented can be used to limited to specific fields
+fields = will always default to all, but if implemented can be used to limit response to only include specific fields
 
 version = maybe we want the caller to be able to specify our API version?
 
 size = number of records to return in any one request, default 2000 (although have to consider how this works with streaming)
 
+?? page = page to get from the larger sequence
+
 ### Reponses
 
 HTTP headers should include:
 * mime type (application/json etc)
-* next & previous
+* next & previous 'rel links'
 
 JSON response should include:
+
+a section called "apipmh": giving status info incliding:
 * name
 * version
-* next & previous
+* next & previous 'rel links'
 * status (OK/Error)
+
+a section named the same as "`<entity>'": which should always contain an array o records (even if there is only one)
+
 
 
 
