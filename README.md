@@ -86,7 +86,7 @@ a section called "apipmh": giving status info including:
 a section named the same as "`<entity>`": which should always contain an array of records (even if there is only one)
 
 e.g. a call to /objects/all/ would return something similar to:
-'''javascript
+```javascript
 {
 "apipmh": {
 	value1: "",
@@ -98,7 +98,7 @@ objects:[
 	{ values },
 	{ values }
 ]
-}'''
+}```
 
 
 
