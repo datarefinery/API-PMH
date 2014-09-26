@@ -41,6 +41,7 @@ It's easier to be clearer about the return values to enable paging. Ideally ever
 * next 
 * previous
 * last
+
 in both the http header and in the JSON response
 
 

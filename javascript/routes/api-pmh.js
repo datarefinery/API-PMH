@@ -5,42 +5,72 @@ var db_host = 'localhost';
 var db_port = '28015';
 var db_db = 'objects';
 var db_table = 'adlib';
-var db_limit = 2000; /* a limit (of records to get) for a getAll call */
-
-
+var db_size = 1000; /* number of 'records' to get for a getAll call */
+var page = 0; /* starting page */
 
 var rdb = null;
-r.connect({host: db_host, port: db_port}, function(err, conn) {
-		if (err) { throw err;}
-		else{rdb = conn;}
-});
+
+	r.connect({host: db_host, port: db_port}, function(err, conn) {
+			if (err) { throw err;}
+			else{rdb = conn;}
+	});
 
 
-exports.getRecord = function(req, res){
+exports.apiHeader = function(req, res, next){
+
+	r.db(db_db).table(db_table).count().
+	run(rdb, function(err, result){
+		if(err){
+			throw err;
+		};
+		var pages = Math.round(result/db_size);
+		res.Body = '{ "apipmh" :' +
+		'{"title": "objects API (apipmh)",' +
+		'"records" : '+result+','+
+		'"pages" : '+pages; /* always need to finish off header with next in chain */
+		next();
+	});
+
+}
+
+exports.getRecord = function(req, res, next){
 	r.db(db_db).table(db_table).
 	get(req.params.id).
 	pluck('id', 'priref', 'object_number', 'object_category', 'object_name').
 	run(rdb, function(err, result){
 		if(err){
-			throw err;
+			res.status(404).type('json').end(res.Body+', "status" : "error", "statustext" : "id ['+req.params.id+ '] does not exist"}}');
+			//throw err;
+		}
+		else{
+			res.status(200).type('json').send(res.Body+', "status" : "ok"} , "objects" : [ '+JSON.stringify(result)+']}');
 		};
-		res.send(result);
+		//next(); end here do not chain onwards
 	});
 };
 
-exports.getAll = function(req, res){
-	r.db(db_db).table(db_table).
-	pluck('id', 'priref', 'object_number', 'object_category', 'object_name').
-	limit(db_limit).
-	run(rdb, function(err, cursor){
+
+exports.getAll = function(req, res, next){
+	limit = db_size;
+	if(req.query.limit){
+		limit = parseInt(req.query.limit);
+		if(limit > db_size){
+			limit=db_size;
+		}
+	}
+	r.db(db_db).table(db_table).pluck('id', 'priref', 'object_number', 'object_category', 'object_name').limit(limit).run(rdb, function(err, cursor){
 		if(err){
 			throw err;
 		};
 		cursor.toArray( function(err, result){
-			res.send(result);
+			if(err){
+				throw err;
+			}
+			res.send(res.Body+', "objects" : '+JSON.stringify(result)+'}');
+			//next(); end here do not chain onwards
 		});
-		//console.log(JSON.stringify(rjson));
-		
 	});
 };
+
+
 	

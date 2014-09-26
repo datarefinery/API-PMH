@@ -33,7 +33,7 @@ ListSets| `<entity>/subset/`| identify subsets | subsets listing (if any)|
 ListMetadataFormats | `<entity>/` | n/a | formats info should be listed in identify at both entity and subset level |
 ListIdentifiers|`<entity>/list/`| list all identifiers | return a list of all entity identifiers (preferably as opendata URIs)|
 ListRecords|`<entity>/all/`| get all records | get all records, paging/sequencing applies |
-GetRecord |`<entity>/<id>`| get record|
+GetRecord |`<entity>/id/<id>`| get record|
 
 ### Requests
 
@@ -42,7 +42,7 @@ Will only be HTTP GETs as they are read only.
 `<entity>/` identify e.g objects/ 
 (my considered preference is that entity is plural)
 
-`<entity>/<id>` get record
+`<entity>/id/<id>` get record
 
 `<entity>/list/` list all record `<id>`'s 
 
@@ -56,7 +56,7 @@ Will only be HTTP GETs as they are read only.
 
 `<entity>/subset/<sid>/all/` get all records in set
 
-?? `<entity>/subset/<sid>/<id>` would get record in set (is this needed as a test? id set/record could then return 404 if its not valid
+?? `<entity>/subset/<sid>/id/<id>` would get record in set (is this needed as a test? id set/record could then return 404 if its not valid
 
 ### Request Parameters
 
@@ -66,22 +66,30 @@ version = maybe we want the caller to be able to specify our API version?
 
 size = number of records to return in any one request, default 2000 (although have to consider how this works with streaming)
 
-?? page = page to get from the larger sequence
+?? page = page to get from the larger sequence (?? is about what term to use here)
 
 ### Reponses
 
 HTTP headers should include:
 * mime/content type (application/json etc)
 * next & previous 'rel links'
+* mimimum 200 for ok, and 404 for not ok
 
 JSON response should include:
 
 a section called "apipmh": giving status info including:
-* name
-* version
+* title
+* description
+* version (do we care?)
 * next & previous 'rel links'
 * values for all 'query requests' (size, format, etc)
 * status (OK/Error)
+* statustext
+
+optional but useful:
+* records (total records)
+* pages (total pages)
+
 
 a section named the same as "`<entity>`": which should always contain an array of records (even if there is only one)
 
