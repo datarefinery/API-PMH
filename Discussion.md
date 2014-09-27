@@ -9,6 +9,7 @@ The purpose of this document is to outline some of the rationale for arriving at
 * Paging, Sequencing, Next/Previous etc
 * Sets, Subsets or?
 * Implementing subsets
+* Selective harvesting
 * What about schema?
 * What about API versioning?
 
@@ -28,7 +29,7 @@ We can transport anything providing the implementor wants to implement those for
 
 Implementation to support extra formats simply needs to:
 
-* in the Request. Accept any of header content type (text/xml), extension (.xml as in `http://<host>/<entity>/<id>.xml`), or format=xml parameter
+* in the Request. Accept any of: header content type (text/xml), extension (.xml as in `http://<host>/<entity>/<id>.xml`), or format=xml parameter
 
 * in the Response. Always return data with correctly set content type in http header e.g. text/xml 
 
@@ -77,6 +78,15 @@ The latter could be implemented much as it would have been in OAI-PMH, with API-
 * include format 'text/xml' in requests (through http accepts, extension or format=parameter)
 * text/xml http Content-Types to properly decribe the format of response data,
 * embedding the XML/XSD namespaces in the XML responses as usual
+
+## Selective Harvesting
+
+I'd like API-PHM to be fairly agnostic here. We are in general of course talking about what OAI-PMH calls 'selective harvesting' and it can also be called searching, filtering etc.
+
+The reason for being agnostic/minimal is that local implementations could add all manner of functionality through subsets and/or extra request parameters and I see no reason to limit that. Nor to dictate what that should be.
+
+But, if it's to be 'PMH' by name then it stands to reason it must support/require, at a minimum, date based harvesting.
+
 
 ## What about API versioning
 
