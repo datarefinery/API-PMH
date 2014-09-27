@@ -91,6 +91,8 @@ So what versioning do we care about? Local implementation versioning is surely j
 I suspect (and hope) that given the experience we now have with OAI-PMH, APIs, harvesting, and data transport in general, that by the time we get to V1.0 of API-PMH it would be quite a stable 'thing'.. I'd be inclined to think that future versions are likely to add to functionality rather than removing any (particlularly around streaming and realtime performance).. 
 
 An alternative view might be that if technology moves on (as it inevitably will) so far that radical changes to API-PMH are required then one might argue that it should be 'retired' as no longer 'fit for purpose'..
+
+
 Shaun Osborne
 
 Sep2014
