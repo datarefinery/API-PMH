@@ -1,7 +1,7 @@
 # Contents
 
 * README.md - this file
-* [discussion.md](https://github.com/museums-io/API-PMH/blob/master/discussion.md) - some background on implementation thoughts
+* [discussion.md](https://github.com/museums-io/API-PMH/blob/master/Discussion.md) - some background on implementation thoughts
 * javascript - directory contains an early test implementation of an API-PMH server based on [Nodejs](http://nodejs.org/), [Expressjs](http://expressjs.com/) and [RethinkDB](http://rethinkdb.com/)
 
 ## API-PMH
