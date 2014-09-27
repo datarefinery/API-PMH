@@ -13,11 +13,11 @@ The purpose of this document is to outline some of the rationale for arriving at
 ## What do you mean 'API standards'
 That's an excellent question which I usually answer jovially with "the great thing about standards are there are so many of them".. not terribly helpful.
 
-So when I talk about 'standards' (quotes intended) I'm actually talking about best practice, and when I say 'best practice' I really mean stuff I've decided is best practice based on discussion, desk research, and in use development/testing.
+So when I talk about 'API standards' (quotes intended) I'm actually talking about best practice (as there are no, even defacto, standards that I'm aware of), and when I say 'best practice' I really mean stuff I've decided is best practice based on discussion, desk research, and in use development/testing.
 
 The primary drivers for my coalesced 'best practice' are, in order, ease of use, ease of development, machine efficient.
 
-Some refs: [Matt Kirby](http://mark-kirby.co.uk/2013/creating-a-true-rest-api/), [Appnexus blog](http://techblog.appnexus.com/2012/on-restful-api-standards-just-be-cool-11-rules-for-practical-api-development-part-1-of-2/)
+Some refs: [by Matt Kirby](http://mark-kirby.co.uk/2013/creating-a-true-rest-api/), [at Appnexus blog](http://techblog.appnexus.com/2012/on-restful-api-standards-just-be-cool-11-rules-for-practical-api-development-part-1-of-2/)
 
 ## JSON format data
 JSON data by 'default' does not preclude transporting any other data types.

@@ -30,7 +30,7 @@ OAI-PMH verb | API-PMH | 'verb' | notes |
 :-------: | :-------: | :-------: | :--------------- |
 Identify | `<entity>/`| identify API | at the root entity url 'identify' is implied |
 ListSets| `<entity>/subset/`| identify subsets | subsets listing (if any)|
-ListMetadataFormats | `<entity>/` | n/a | formats info should be listed in identify at both entity and subset level |
+ListMetadataFormats | `<entity>/` | n/a | formats info should primaryily be handled by Header->Content-Type's. Schema's on the other hand (which are handled here, in ListMetadataFormats, by OAI-PMH) should be handled seperately. |
 ListIdentifiers|`<entity>/list/`| list all identifiers | return a list of all entity identifiers (preferably as opendata URIs)|
 ListRecords|`<entity>/all/`| get all records | get all records, paging/sequencing applies |
 GetRecord |`<entity>/id/<id>`| get record|
@@ -114,7 +114,12 @@ objects:[
 }
 ```
 
+### Glossary
+In order to avoid confusion (for me as much as anyone else) we will list here terms and their use.
 
+format(s) - is used to describe data formats, in a http Content-Type sense, hence JSON, XML, text etc
+
+schema - is used traditionally, in the sense that if a formal schema/DTD/XSD/mapping exists data can be validated against it. For JSON in particular the 'default' is obviously 'schema'-less, or unstructured data.
 
 Shaun Osborne
 Sep2014
