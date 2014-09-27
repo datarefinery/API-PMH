@@ -8,8 +8,8 @@
 
 API-PMH is a proposal for implementing an updated 'protocol for metadata harvesting', inspired by [OAI-PMH](http://www.openarchives.org/pmh/), using current technology 'standards' & practice, including:
 
-* JSON data by default (acknowledging the need to support both schema'd and unstructured data)
-* REST API (based on 'defacto API practices' including being stateless, using 'correct' HTTP requests/responses, content types, and 'standard' sequencing/paging)
+* JSON data by default (not to exclude other formats though, e.g. XML, and capable of both schema'd and unstructured data)
+* REST API (based on 'defacto API practices' including being stateless, using 'correct' HTTP requests/responses, content types, and paging)
 * a desire for the API to coexist within the opendata permament URI implementations and practice
 * to be streaming (and possibly real-time) capable
 
@@ -29,13 +29,13 @@ Achieving these basic goals would hopefully make API-PMH useful for not only int
 OAI-PMH verb | API-PMH | 'verb' | notes |
 :-------: | :-------: | :-------: | :--------------- |
 Identify | `<entity>/`| identify API | at the root entity url 'identify' is implied |
-ListSets| `<entity>/subset/`| identify subsets | subsets listing (if any)|
-ListMetadataFormats | `<entity>/` | n/a | formats info should primaryily be handled by Header->Content-Type's. Schema's on the other hand (which are handled here, in ListMetadataFormats, by OAI-PMH) should be handled seperately. |
-ListIdentifiers|`<entity>/list/`| list all identifiers | return a list of all entity identifiers (preferably as opendata URIs)|
-ListRecords|`<entity>/all/`| get all records | get all records, paging/sequencing applies |
+ListIdentifiers|`<entity>/list/`| list all identifiers | return a list of all entity identifiers (preferably as opendata URIs), paging/sequencing & filtering can apply|
 GetRecord |`<entity>/id/<id>`| get record|
+ListRecords|`<entity>/all/`| get all records | get all records, paging/sequencing & filtering applies |
+ListSets| `<entity>/subset/`| identify subsets | subsets listing (if any)|
+ListMetadataFormats | `<entity>/` | n/a | formats info should primarily be handled by Header->Content-Type's. Schema's on the other hand (which are handled here, in ListMetadataFormats, by OAI-PMH) should be handled seperately. |
 
-### Requests
+### API-PMH Requests
 
 Will only be HTTP GETs as they are read only.
 
@@ -58,17 +58,17 @@ Will only be HTTP GETs as they are read only.
 
 ?? `<entity>/subset/<sid>/id/<id>` would get record in set (is this needed as a test? id set/record could then return 404 if its not valid
 
-### Request Parameters
-
-fields = will always default to all, but if implemented can be used to limit response to only include specific fields
-
-version = maybe we want the caller to be able to specify our API version?
+### API-PMH Request Parameters
 
 size = number of records to return in any one request, default 2000 (although have to consider how this works with streaming)
 
 page = page to get from the larger sequence
 
-### Reponses
+fields = optional, will always default to all, but if implemented can be used to limit response to only include specific fields
+
+??version = maybe we want the caller to be able to specify our API version?
+
+### API-PMH Reponses
 
 HTTP headers should include:
 * mime/content type (application/json etc)
@@ -80,8 +80,10 @@ JSON response should include:
 a section called "apipmh": giving status info including:
 * title
 * description
+* publisher
+* contactEmail
 * version (do we care?)
-* next & previous links
+* rel-links
 * values for all 'query requests' (size, format, etc)
 * status (OK/Error)
 * statusMessage
@@ -96,16 +98,21 @@ a section named the same as "`<entity>`": which should always contain an array o
 e.g. a call to /objects/all/ would return something similar to:
 ```javascript
 {
-"apipmh": {
-	"title": "objects API (apipmh)",
-    "records": 198033,
-    "pages": 991,
-    "size": 200,
-    "status": "ok",
-    "next": "http://localhost:3000/objects/id/all/?page=6",
-    "prev": "http://localhost:3000/objects/id/all/?page=4"
-	}
-
+apipmh: {
+        title: "Collection Objects API (API-PMH)",
+        description: "beta test API-PMH implementation",
+        publisher: "The Museum",
+        contactEmail: "nowhere@nowhere",
+        records: 198033,
+        pages: 1980,
+        size: 100,
+        status: "ok",
+        link: {
+        next: "http://localhost:3000/objects/id/all/?size=100&page=11",
+        prev: "http://localhost:3000/objects/id/all/?size=100&page=9",
+        first: "http://localhost:3000/objects/id/all/?size=100&page=0",
+        last: "http://localhost:3000/objects/id/all/?size=100&page=1980"
+},
 objects:[
 	{ values },
 	{ values },
@@ -115,11 +122,12 @@ objects:[
 ```
 
 ### Glossary
-In order to avoid confusion (for me as much as anyone else) we will list here terms and their use.
+In order to avoid confusion (for me as much as anyone else) we will list here terms and clarity of their use.
 
-format(s) - is used to describe data formats, in a http Content-Type sense, hence JSON, XML, text etc
+*format - is used to describe data formats, in a http Content-Type sense, hence JSON, XML, HTML, text etc
 
-schema - is used traditionally, in the sense that if a formal schema/DTD/XSD/mapping exists data can be validated against it. For JSON in particular the 'default' is obviously 'schema'-less, or unstructured data.
+*schema - is used traditionally, in the sense that if a formal schema/DTD/XSD/mapping exists data can be validated against it. For JSON in particular the 'default' is obviously 'schema'-less, or unstructured data.
 
 Shaun Osborne
+
 Sep2014

@@ -28,7 +28,10 @@ exports.apiHeader = function(req, res, next){
 		size = calculatesize(req.query.size, db_size);
 		db_pages = parseInt(result/size);
 		res.Body = '{ "apipmh" :' +
-		'{"title": "objects API (apipmh)",' +
+		'{"title": "Collection Objects API (API-PMH)",' +
+		'"description": "beta test API-PMH implementation",' +
+		'"publisher": "The Museum",' +
+		'"contactEmail": "nowhere@nowhere",' +
 		'"records" : '+result+','+
 		'"pages" : '+db_pages+','+
 		'"size" : '+size; /* always need to finish off header with next in chain */

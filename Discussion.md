@@ -9,6 +9,7 @@ The purpose of this document is to outline some of the rationale for arriving at
 * Paging, Sequencing, Next/Previous etc
 * Sets, Subsets or?
 * Implementing subsets
+* What about schema?
 
 ## What do you mean 'API standards'
 That's an excellent question which I usually answer jovially with "the great thing about standards are there are so many of them".. not terribly helpful.
@@ -59,6 +60,23 @@ Observationally it should be quite simple using the current crop of 'noSQL datab
 * [RethinkDB](http://rethinkdb.com/) = database/table
 * [Redis](http://redis.io/) = database/set
 
+## What about schema?
+Obviously to build a widely use harvesting infrastruture to perform data aggregations we have to agree on some minimum data schema...  OAI-PMH achieved this by specificying a minimum schema (dublin core) which every OAI-PMH provider had to implement. 
+
+Things have moved on (both in the sense of how APIs are implemented and schemas which are commonly used) and API-PMH purposefully avoids saying anything about the data it transports, including schema. 
+
+In practice suppliers/aggregators generally agree a schema (which should be independent of the transport, and usually is). At a higher level sectors usually agree a schema, e.g. in the cultural sector DC, CIDOC, LIDO and EDM, and once again these should, and are usually, independent of the transport technology.
+
+API-PMH wants to be a transport and intends to be able to carry any data, schema'd or schema-less.
+
+So, API-PMH will support an ability to specify schema and carry schema'd data. As it is currently described API-PMH can carry completely schema-less JSON data, or fully schema'd XML dublin core data.
+
+The latter could be implemented much as it would have been in OAI-PMH, with API-PMH only requiring:
+* the use of URI and paramaters as described to make requests
+* include format 'text/xml' in requests (through http accepts, extension or format=parameter)
+* text/xml http Content-Types to properly decribe the format of response data,
+* embedding the XML/XSD namespaces in the XML responses as usual
 
 Shaun Osborne
+
 Sep2014
