@@ -52,15 +52,15 @@ Will only be HTTP GETs as they are read only.
 
 `<entity>/subset/<sid>/` get sub-set identify record  
 
-`<entity>/subset/<sid>/list/` get all record `<id>`'s in set
+`<entity>/subset/<sid>/list/` get all record `<id>`'s in subset
 
-`<entity>/subset/<sid>/all/` get all records in set
+`<entity>/subset/<sid>/all/` get all records in subset
 
-?? `<entity>/subset/<sid>/id/<id>` would get record in set (is this needed as a test? id set/record could then return 404 if its not valid
+?? `<entity>/subset/<sid>/id/<id>` would get record in set (is this needed as a test? e.g. subset/id could then return 404 if id is not in subset)
 
 ### API-PMH Request Parameters
 
-size = number of records to return in any one request, default 2000 (although have to consider how this works with streaming)
+size = number of records to return in any one request, default 500 (although have to consider how this works with streaming)
 
 page = page to get from the larger sequence
 
