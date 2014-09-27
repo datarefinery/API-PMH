@@ -85,8 +85,8 @@ a section called "apipmh": giving status info including:
 * version (do we care?)
 * rel-links
 * values for all 'query requests' (size, format, etc)
-* status (OK/Error)
-* statusMessage
+* status (ok/error)
+* statusMessage (say something about an error if there is one?)
 
 optional but useful:
 * records (total records)
@@ -95,7 +95,7 @@ optional but useful:
 
 a section named the same as "`<entity>`": which should always contain an array of records (even if there is only one)
 
-e.g. a call to /objects/all/ would return something similar to:
+e.g. a call to /objects/all/?page=10 would return something similar to:
 ```javascript
 {
 apipmh: {
