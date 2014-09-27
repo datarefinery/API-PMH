@@ -81,7 +81,7 @@ a section called "apipmh": giving status info including:
 * title
 * description
 * version (do we care?)
-* next & previous 'rel links'
+* next & previous links
 * values for all 'query requests' (size, format, etc)
 * status (OK/Error)
 * statusMessage
