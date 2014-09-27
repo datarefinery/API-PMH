@@ -10,6 +10,7 @@ The purpose of this document is to outline some of the rationale for arriving at
 * Sets, Subsets or?
 * Implementing subsets
 * What about schema?
+* What about API versioning?
 
 ## What do you mean 'API standards'
 That's an excellent question which I usually answer jovially with "the great thing about standards are there are so many of them".. not terribly helpful.
@@ -77,6 +78,19 @@ The latter could be implemented much as it would have been in OAI-PMH, with API-
 * text/xml http Content-Types to properly decribe the format of response data,
 * embedding the XML/XSD namespaces in the XML responses as usual
 
+## What about API versioning
+
+Again an excellent questions which has many answers in current practice.
+
+One of the most transparent is to implement version on the URI, e.g. http://somewhere/api/v1-1/objects/id
+
+Whilst I like the transparency, it has a fundamental problem that the API cannot then coexist within the open data permanent URI model because every time you change API version the URI's change - and obviously that can't happen.
+
+So what versioning do we care about? Local implementation versioning is surely just a 'reportable', it shouldn't impact use. If API-PMH has versioning (as OAI-PMH ended up having through to V2) then I'd be inclined to let the consumer deal with it by calling 'indentify' getting the 'apipmhVersion' and quitting if its below the version they require.
+
+I suspect (and hope) that given the experience we now have with OAI-PMH, APIs, harvesting, and data transport in general, that by the time we get to V1.0 of API-PMH it would be quite a stable 'thing'.. I'd be inclined to think that future versions are likely to add to functionality rather than removing any (particlularly around streaming and realtime performance).. 
+
+An alternative view might be that if technology moves on (as it inevitably will) so far that radical changes to API-PMH are required then one might argue that it should be 'retired' as no longer 'fit for purpose'..
 Shaun Osborne
 
 Sep2014
