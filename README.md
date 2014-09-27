@@ -33,7 +33,7 @@ ListIdentifiers|`<entity>/list/`| list all identifiers | return a list of all en
 GetRecord |`<entity>/id/<id>`| get record|
 ListRecords|`<entity>/id/all/`| get all records | get all records, paging/sequencing & filtering applies |
 ListSets| `<entity>/subset/`| identify subsets | subsets listing (if any)|
-ListMetadataFormats | `<entity>/` | n/a | formats info should primarily be handled by Header->Content-Type's. Schema's on the other hand (which are handled here, in ListMetadataFormats, by OAI-PMH) should be handled seperately. |
+ListMetadataFormats | `<entity>/` | n/a | formats info should primarily be handled by Header->Content-Type's. Schema's on the other hand (which are sometimes handled here, in ListMetadataFormats, by OAI-PMH) should be handled seperately. |
 
 ### API-PMH Requests
 
@@ -46,7 +46,7 @@ Will only be HTTP GETs as they are read only.
 
 `<entity>/list/` list all record `<id>`'s 
 
-`<entity>/all/` get all records 
+`<entity>/id/all/` get all records 
 
 `<entity>/subset/` identify available sub-sets
 
