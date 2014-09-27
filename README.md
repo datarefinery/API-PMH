@@ -10,7 +10,7 @@ API-PMH is a proposal for implementing an updated 'protocol for metadata harvest
 
 * JSON data by default (not to exclude other formats though, e.g. XML, and capable of both schema'd and unstructured data)
 * REST API (based on 'defacto API practices' including being stateless, using 'correct' HTTP requests/responses, content types, and paging)
-* a desire for the API to coexist within the opendata permament URI implementations and practice
+* a desire for the API to coexist within the open data permament URI implementations and practice
 * to be streaming (and possibly real-time) capable
 
 The rationale is to create a harvesting API which is simple(r) to:
@@ -60,7 +60,7 @@ Will only be HTTP GETs as they are read only.
 
 ### API-PMH Request Parameters
 
-size = number of records to return in any one request, default 500 (although have to consider how this works with streaming)
+limit = number of records to return in any one request, default 500 (although have to consider how this works with streaming)
 
 page = page to get from the larger sequence
 
@@ -84,7 +84,7 @@ a section called "apipmh": giving status info including:
 * contactEmail
 * version (do we care?)
 * rel-links
-* values for all 'query requests' (size, format, etc)
+* values for all 'query requests' (limit, format, etc)
 * status (ok/error)
 * statusMessage (say something about an error if there is one?)
 
@@ -105,13 +105,13 @@ apipmh: {
         contactEmail: "nowhere@nowhere",
         records: 198033,
         pages: 1980,
-        size: 100,
+        limit: 100,
         status: "ok",
         link: {
-        next: "http://localhost:3000/objects/id/all/?size=100&page=11",
-        prev: "http://localhost:3000/objects/id/all/?size=100&page=9",
-        first: "http://localhost:3000/objects/id/all/?size=100&page=0",
-        last: "http://localhost:3000/objects/id/all/?size=100&page=1980"
+        next: "http://localhost:3000/objects/id/all/?limit=100&page=11",
+        prev: "http://localhost:3000/objects/id/all/?limit=100&page=9",
+        first: "http://localhost:3000/objects/id/all/?limit=100&page=0",
+        last: "http://localhost:3000/objects/id/all/?limit=100&page=1980"
 },
 objects:[
 	{ values },
