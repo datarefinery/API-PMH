@@ -1,7 +1,8 @@
 # Contents
 
 * README.md - this file
-* [discussion.md](https://github.com/museums-io/API-PMH/blob/master/Discussion.md) - some background on implementation thoughts
+* [Discussion.md](https://github.com/museums-io/API-PMH/blob/master/Discussion.md) - some background on implementation thoughts
+* [PermanentURIs.md](https://github.com/museums-io/API-PMH/blob/master/PermanentURIs.md) - some background coexistence of Permanent URIs and API in same URI space
 * javascript - directory contains an early test implementation of an API-PMH server based on [Nodejs](http://nodejs.org/), [Expressjs](http://expressjs.com/) and [RethinkDB](http://rethinkdb.com/)
 
 ## API-PMH
@@ -28,35 +29,35 @@ Achieving these basic goals would hopefully make API-PMH useful for not only int
 
 OAI-PMH verb | API-PMH | 'verb' | notes |
 :-------: | :-------: | :-------: | :--------------- |
-Identify | `<entity>/`| identify API | at the root entity url 'identify' is implied |
-ListIdentifiers|`<entity>/list/`| list all identifiers | return a list of all entity identifiers (preferably as opendata URIs), paging/sequencing & filtering can apply|
-GetRecord |`<entity>/id/<id>`| get record|
-ListRecords|`<entity>/id/all/`| get all records | get all records, paging/sequencing & filtering applies |
-ListSets| `<entity>/subset/`| identify subsets | subsets listing (if any)|
-ListMetadataFormats | `<entity>/` | n/a | formats info should primarily be handled by Header->Content-Type's. Schema's on the other hand (which are sometimes handled here, in ListMetadataFormats, by OAI-PMH) should be handled seperately. |
+Identify | `id/<entity>/`| identify API | at the root entity url 'identify' is implied |
+ListIdentifiers|`id/<entity>/list/`| list all identifiers | return a list of all entity identifiers (preferably as opendata URIs), paging/sequencing & filtering can apply|
+GetRecord |`id/<entity>/<id>`| get record|
+ListRecords|`id/<entity>/all/`| get all records | get all records, paging/sequencing & filtering applies |
+ListSets| `id/<entity>/subset/`| identify subsets | subsets listing (if any)|
+ListMetadataFormats | `id/<entity>/` | n/a | formats info should primarily be handled by Header->Content-Type's. Schema's on the other hand (which are sometimes handled here, in ListMetadataFormats, by OAI-PMH) should be handled seperately. |
 
 ### API-PMH Requests
 
 Will only be HTTP GETs as they are read only.
 
-`<entity>/` identify e.g objects/ 
+`id/<entity>` identify e.g objects/ 
 (my considered preference is that entity is plural)
 
-`<entity>/id/<id>` get record
+`id/<entity>/<id>` get record
 
-`<entity>/list/` list all record `<id>`'s 
+`id/<entity>/list/` list all record `<id>`'s 
 
-`<entity>/id/all/` get all records 
+`id/<entity>/id/all/` get all records 
 
-`<entity>/subset/` identify available sub-sets
+`id/<entity>/subset/` identify available sub-sets
 
-`<entity>/subset/<sid>/` get sub-set identify record  
+`id/<entity>/subset/<sid>/` get sub-set identify record  
 
-`<entity>/subset/<sid>/list/` get all record `<id>`'s in subset
+`id/<entity>/subset/<sid>/list/` get all record `<id>`'s in subset
 
-`<entity>/subset/<sid>/all/` get all records in subset
+`id/<entity>/subset/<sid>/all/` get all records in subset
 
-?? `<entity>/subset/<sid>/id/<id>` would get record in set (is this needed as a test? e.g. subset/id could then return 404 if id is not in subset)
+?? `id/<entity>/subset/<sid>/<id>` would get record in set (is this needed as a test? e.g. subset/id could then return 404 if id is not in subset)
 
 ### API-PMH Request Parameters
 
@@ -95,7 +96,7 @@ optional but useful:
 
 a section named the same as "`<entity>`": which should always contain an array of records (even if there is only one)
 
-e.g. a call to /objects/id/all/?page=10 would return something similar to:
+e.g. a call to id/objects/all/?page=10 would return something similar to:
 ```javascript
 {
 apipmh: {
