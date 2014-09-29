@@ -71,9 +71,9 @@ Things have moved on (both in the sense of how APIs are implemented and schemas 
 
 In practice suppliers/aggregators generally agree a schema (which should be independent of the transport, and usually is). At a higher level sectors usually agree a schema, e.g. in the cultural sector DC, CIDOC, LIDO and EDM, and once again these should, and are usually, independent of the transport technology.
 
-API-PMH wants to be a transport and intends to be able to carry any data, schema'd or schema-less.
+API-PMH wants to be a transport and intends to be able to carry any data, and any schema, or schema-less.
 
-So, API-PMH will support an ability to specify schema and carry schema'd data. As it is currently described API-PMH can carry completely schema-less JSON data, or fully schema'd XML dublin core data.
+So, API-PMH will support an ability to specify schema and carry schema'd data. As it is currently described API-PMH can carry anything from completely schema-less JSON data, through to fully schema'd XML dublin core data.
 
 The latter could be implemented much as it would have been in OAI-PMH, with API-PMH only requiring:
 * the use of URI and paramaters as described to make requests
@@ -89,7 +89,7 @@ The reason for being agnostic/minimal is that local implementations could add al
 
 But, if it's to be 'PMH' by name then it stands to reason it must support/require, at a minimum, date based harvesting. This should probably be implemented in its simplest form, e.g.
 
-a request paramter in the form of fromdate=YYYY-MM-DD[:hh-mm-ss]
+a request paramter in the from of fromdate=YYYY-MM-DD[:hh-mm-ss]
 
 
 ## What about API versioning
@@ -100,9 +100,9 @@ One of the most transparent is to implement version on the URI, e.g. http://some
 
 Whilst I like the transparency, it has a fundamental problem that the API cannot then coexist within the open data permanent URI model because every time you change API version the URI's change - and obviously that can't happen.
 
-So what versioning do we care about? Local implementation versioning is surely just a 'reportable', it shouldn't impact use. If API-PMH has versioning (as OAI-PMH ended up having through to V2) then I'd be inclined to let the consumer deal with it by calling 'indentify' getting the 'apipmhVersion' (or similar) and quitting if its below the version they require.
+So what versioning do we care about? Local implementation versioning is surely just a 'reportable', it shouldn't impact use. If API-PMH has versioning (as OAI-PMH ended up having through to V2) then I'd be inclined to let the consumer deal with it by calling 'identify' getting the 'apipmhVersion' (or similar) and quitting if its below the version they require.
 
-I suspect (and hope) that given the experience we now have with OAI-PMH, APIs, harvesting, and data transport in general, that by the time we get to V1.0 of API-PMH it would be quite a stable 'thing'.. I'd be inclined to think that future versions are likely to add to functionality rather than removing any (additions expected particlularly around streaming and realtime performance).. 
+I suspect (and hope) that given the experience we now have with OAI-PMH, APIs, harvesting, and data transport in general, that by the time we get to V1.0 of API-PMH it would be quite a stable 'thing'.. I'd be inclined to think that future versions are likely to add to functionality rather than removing, or radically changing,  any (additions expected particlularly around streaming and realtime performance).. 
 
 An alternative view might be that if technology moves on (as it inevitably will) so far that radical changes to API-PMH are required then one might argue that it should be 'retired' as no longer 'fit for purpose'..
 

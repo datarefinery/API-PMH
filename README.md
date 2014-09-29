@@ -95,7 +95,7 @@ optional but useful:
 
 a section named the same as "`<entity>`": which should always contain an array of records (even if there is only one)
 
-e.g. a call to /objects/all/?page=10 would return something similar to:
+e.g. a call to /objects/id/all/?page=10 would return something similar to:
 ```javascript
 {
 apipmh: {
