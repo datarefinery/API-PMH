@@ -2,7 +2,7 @@
 
 var express = require('express');
 var logger = require('morgan');
-var routes = require('./routes/rethinkdb-apipmh.js'); 
+var routes = require('./rethinkdb-routes.js'); 
 
 var app = express();
 
