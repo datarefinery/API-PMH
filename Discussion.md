@@ -36,7 +36,7 @@ Implementation to support extra formats simply needs to:
 ## Paging, Sequencing, Next/Previous etc
 The most important part of any harvesting API is its ability to allow harvesting in 'bites' (or in blocks or pages..). OAI-PMH implements this through the 'List' verbs in conjunction with 'resumptionToken' (and this usually requires the establishment of a server side session, which it would be better to avoid for efficiency reasons).
 
-The most commonly observed pattern in 'modern' APIs is to use 'URI links' to the next page, and sometimes to previous page, and even total pages. These can be implemented in http responses in the http headers and/or in the JSON return packet. Obviously the implementation is responsible generation these automatically (taking into account 'size=' parameter for the 'number of records in a page').
+The most commonly observed pattern in 'modern' APIs is to use 'URI links' to the next page, and sometimes to previous page, and even total pages. These can be implemented in http responses in the http headers and/or in the JSON return packet. Obviously the implementation is responsible generation of these automatically (taking into account 'size=' parameter for the 'number of records in a page' etc).
 
 Based on my inclination that language in the URI is important to help the API 'self describe', some thought on the terminology used in query strings is probably appropriate ('standard' candidates are, offset=, page=). 
 
@@ -53,7 +53,9 @@ in both the http header and in the JSON response
 Terminology can be important. It communicates intent even when used on URI's.
 Using permanent URI ids in the form of `http://<host-domain>/<entity>/<id>` implies to me that `<entity>` is already a 'set'. 'Sets' as implemented in OAI-PMH, and when they are used in the context of open data URIs then, are more precisely a 'subset'.
 
-It flows then that when you address an `<entity>` you are already talking about the overall 'set' (all the records for that entity), therefore any 'collections' or 'sets' defined under/below this top level 'set' must logically be a subset of the larger set.   
+It flows then that when you address an `<entity>` you are already talking about the overall 'set' (all the records for that entity), therefore any 'collections' or 'sets' defined under/below this top level 'set' must logically be a subset of the larger set. 
+
+'Pedants of the world unite..' :-)  
 
 ## Implementing subsets
 Observationally it should be quite simple using the current crop of 'noSQL databases' to implement subsets because `<entity>/<subset>` maps quite neatly into their own data structures:
@@ -75,7 +77,7 @@ So, API-PMH will support an ability to specify schema and carry schema'd data. A
 
 The latter could be implemented much as it would have been in OAI-PMH, with API-PMH only requiring:
 * the use of URI and paramaters as described to make requests
-* include format 'text/xml' in requests (through http accepts, extension or format=parameter)
+* include format 'text/xml' in requests (through http accepts, extension or format=xml parameter)
 * text/xml http Content-Types to properly decribe the format of response data,
 * embedding the XML/XSD namespaces in the XML responses as usual
 
@@ -85,20 +87,22 @@ I'd like API-PHM to be fairly agnostic here. We are in general of course talking
 
 The reason for being agnostic/minimal is that local implementations could add all manner of functionality through subsets and/or extra request parameters and I see no reason to limit that. Nor to dictate what that should be.
 
-But, if it's to be 'PMH' by name then it stands to reason it must support/require, at a minimum, date based harvesting.
+But, if it's to be 'PMH' by name then it stands to reason it must support/require, at a minimum, date based harvesting. This should probably be implemented in its simplest form, e.g.
+
+a request paramter in the form of fromdate=YYYY-MM-DD[:hh-mm-ss]
 
 
 ## What about API versioning
 
-Again an excellent questions which has many answers in current practice.
+Again an excellent question which has many answers in current practice.
 
 One of the most transparent is to implement version on the URI, e.g. http://somewhere/api/v1-1/objects/id
 
 Whilst I like the transparency, it has a fundamental problem that the API cannot then coexist within the open data permanent URI model because every time you change API version the URI's change - and obviously that can't happen.
 
-So what versioning do we care about? Local implementation versioning is surely just a 'reportable', it shouldn't impact use. If API-PMH has versioning (as OAI-PMH ended up having through to V2) then I'd be inclined to let the consumer deal with it by calling 'indentify' getting the 'apipmhVersion' and quitting if its below the version they require.
+So what versioning do we care about? Local implementation versioning is surely just a 'reportable', it shouldn't impact use. If API-PMH has versioning (as OAI-PMH ended up having through to V2) then I'd be inclined to let the consumer deal with it by calling 'indentify' getting the 'apipmhVersion' (or similar) and quitting if its below the version they require.
 
-I suspect (and hope) that given the experience we now have with OAI-PMH, APIs, harvesting, and data transport in general, that by the time we get to V1.0 of API-PMH it would be quite a stable 'thing'.. I'd be inclined to think that future versions are likely to add to functionality rather than removing any (particlularly around streaming and realtime performance).. 
+I suspect (and hope) that given the experience we now have with OAI-PMH, APIs, harvesting, and data transport in general, that by the time we get to V1.0 of API-PMH it would be quite a stable 'thing'.. I'd be inclined to think that future versions are likely to add to functionality rather than removing any (additions expected particlularly around streaming and realtime performance).. 
 
 An alternative view might be that if technology moves on (as it inevitably will) so far that radical changes to API-PMH are required then one might argue that it should be 'retired' as no longer 'fit for purpose'..
 

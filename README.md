@@ -10,7 +10,7 @@ API-PMH is a proposal for implementing an updated 'protocol for metadata harvest
 
 * JSON data by default (not to exclude other formats though, e.g. XML, and capable of both schema'd and unstructured data)
 * REST API (based on 'defacto API practices' including being stateless, using 'correct' HTTP requests/responses, content types, and paging)
-* a desire for the API to coexist within the open data permament URI implementations and practice
+* a desire for the API to coexist within the open data permament URI implementation and practice
 * to be streaming (and possibly real-time) capable
 
 The rationale is to create a harvesting API which is simple(r) to:
@@ -22,7 +22,7 @@ over:
 * JSON document databases/stores/indexers ('noSQL')
 * and maybe even triplestores
 
-Achieving these basic goals would hopefully make API-PMH useful for not only inter-site 'harvesting', but also efficient enough for intra/inter-system 'middleware' data transport.
+Achieving these basic goals would hopefully make API-PMH useful for not only inter-site 'harvesting', but also efficient enough for use in intra/inter-system 'middleware' data transport and in some use cases for direct use in mobile applications.
 
 ### Equivalence Table
 

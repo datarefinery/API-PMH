@@ -8,7 +8,7 @@ var db_port = '28015';
 var db_db = 'objects';
 var db_table = 'adlib';
 var db_limit = 200; /* number of 'records' to get for a getAll call */
-var db_max_limit = 10000;
+var db_max_limit = 10000; /* maximum limit we'll take as a request */
 var db_pages = 0;
 
 /* open database */
@@ -33,7 +33,7 @@ exports.apiHeader = function(req, res, next){
 		'"description": "beta test API-PMH implementation",' +
 		'"publisher": "The Museum",' +
 		'"contactEmail": "nowhere@nowhere",' +
-		'"records" : '+result+','+
+		'"totalRecords" : '+result+','+
 		'"pages" : '+db_pages+','+
 		'"limit" : '+limit; /* always need to finish off header with next in chain */
 
@@ -65,7 +65,6 @@ exports.getAll = function(req, res, next){
 /* do all the pagination calculations */
 	/* figure out the pages */
     if(req.query.page){
-    	console.log(req.query.page);
     	var page = parseInt(req.query.page);
     	var npage = page+1;
 		if(npage >= db_pages){ npage = db_pages;};
@@ -75,7 +74,7 @@ exports.getAll = function(req, res, next){
     	var npage = 1;
     	var ppage = -1;
     }
-    /* figure out limit */
+	/* figure out limit */
     limit = calculatelimit(req.query.limit, db_limit, db_max_limit);
     linkuri = api_host+req.path+'?limit='+limit+'&page=';
     hdrlinks = generateHeaderLinks(linkuri, page, npage, ppage, db_pages)	//console.log(limit);
@@ -86,8 +85,9 @@ exports.getAll = function(req, res, next){
 	if(ppage >= 0){prevuri = linkuri+ppage;};
 	if(npage < db_pages){nexturi = linkuri+npage;};
 	skip = page*limit;
-    /* ok we've got all the pagination goodies now make the db call */	
+	/* ok we've got all the pagination goodies now make the db call */	
 	r.db(db_db).table(db_table).
+	//orderBy({index: 'id'}).
 	skip(skip).limit(limit).pluck('id', 'priref', 'object_number', 'object_category', 'object_name').
 	run(rdb, function(err, cursor){
 		if(err){
@@ -111,10 +111,10 @@ exports.getAll = function(req, res, next){
 
 exports.identifyAPI = function(req, res, next){
 	if(req.path === '/objects/'){
-	    res.status(200).type('json').send(res.Body + ', "routeVerb" : "indentifyAPI", "status" : "ok" }}');
+	    res.status(200).type('json').send(res.Body + ', "routeVerb" : "identifyAPI", "status" : "ok" }}');
 	}else{
 		res.status(404).type('json').send(res.Body + 
-			', "routeVerb" : "indentifyAPI", "status" : "error", "statusMessage" : "not recognised [' + req.path + ']" }}');
+			', "routeVerb" : "identifyAPI", "status" : "error", "statusMessage" : "not recognised [' + req.path + ']" }}');
 	};
     //next(); end here..
 }; 
@@ -123,7 +123,6 @@ exports.identifyAPI = function(req, res, next){
 
 /** these are general helper functions **/
 var calculatelimit = function(limit, std, max){
-	//console.log(limit,max);
 	if(limit){
 		if(limit > max){
 		return max;
