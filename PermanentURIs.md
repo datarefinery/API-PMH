@@ -1,7 +1,7 @@
 # Permanent URIs
 The purpose of this document is to explore whether interleaving a API-PMH APIs into existing open data permanent URI space is feasible and logical. This all gets slightly arcane but this level of design consideration at the outset will save you a 'world of pain' (random Big Lebowski quote..) ..
 
-The main of the permanent URI design considerations were laid out in a HM Government document in 2009 [[1](https://www.gov.uk/government/publications/designing-uri-sets-for-the-uk-public-sector)]. Subsequent reviews and desk research has been carried out and a good source for background from across the EU is in Phil Archer's [study](http://philarcher.org/diary/2013/uripersistence/).
+The main of the permanent URI design considerations were laid out in a HM Government document in 2009 [[1](https://www.gov.uk/government/publications/designing-uri-sets-for-the-uk-public-sector)]. Subsequent reviews and desk research has been carried out and a good source for background from across the EU is in Phil Archer's 2013 [study](http://philarcher.org/diary/2013/uripersistence/).
 
 What I'm interested in is whether API-PMH can coexist within the same URI space, meaning say:
 * http://yourdomain/id/object/`<id>` is a nicely formed persistent URI (which may return something or 303 redirect elsewhere)
