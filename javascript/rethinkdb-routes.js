@@ -110,7 +110,7 @@ exports.getAll = function(req, res, next){
 };
 
 exports.identifyAPI = function(req, res, next){
-	if(req.path === '/objects/'){
+	if(req.path === '/id/objects/'){
 	    res.status(200).type('json').send(res.Body + ', "routeVerb" : "identifyAPI", "status" : "ok" }}');
 	}else{
 		res.status(404).type('json').send(res.Body + 
