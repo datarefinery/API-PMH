@@ -5,7 +5,7 @@ The main of the permanent URI design considerations were laid out in a HM Govern
 
 What I'm interested in is whether API-PMH can coexist within the same URI space, meaning say:
 * http://yourdomain/id/object/`<id>` is a nicely formed persistent URI (which may return something or 303 redirect elsewhere)
-* http://yourdomain/id/object/all/ is an API-PMH call to get all the records from `<object>/<id>`
+* http://yourdomain/id/object/all/ is an API-PMH call to get all the records from `<id>/<object>`
 
 You can see that things might get confusing.. and on first sight it may look to be muddling up 'implementation' (of API-PMH) with our neatly designed 'standalone' persistent URI's.  
 
