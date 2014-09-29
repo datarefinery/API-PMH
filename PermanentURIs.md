@@ -1,5 +1,5 @@
 # Permanent URIs
-The purpose of this document is to explore whether interleaving a API-PMH APIs into existing open data permanent URI space is feasible and logical. This all gets slightly arcane but this level of design consideration at the outset will save you a 'world of pain' (random Big Lebowski quote..) ..
+The purpose of this document is to explore whether interleaving an API-PMH API into existing open data permanent URI space is feasible and logical. This all gets slightly arcane but this level of design consideration at the outset will save you a 'world of pain' (random Big Lebowski quote..) ..
 
 The main of the permanent URI design considerations were laid out in a HM Government document in 2009 [[1](https://www.gov.uk/government/publications/designing-uri-sets-for-the-uk-public-sector)]. Subsequent reviews and desk research has been carried out and a good source for background from across the EU is in Phil Archer's 2013 [study](http://philarcher.org/diary/2013/uripersistence/).
 
