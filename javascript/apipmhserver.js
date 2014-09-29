@@ -11,11 +11,11 @@ app.use(logger('dev'));     /* 'default', 'short', 'tiny', 'dev' */
 
 app.use(routes.apiHeader);
 
-app.get('/objects/id/all/', routes.getAll);
+app.get('/id/objects/all/', routes.getAll);
 
-app.get('/objects/id/:id', routes.getRecord);
+app.get('/id/objects/:id', routes.getRecord);
 
-app.get('/objects/*', routes.identifyAPI); 
+app.get('/id/objects/*', routes.identifyAPI); 
 
 
 app.listen(3000);
