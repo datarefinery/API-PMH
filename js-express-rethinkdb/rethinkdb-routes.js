@@ -41,6 +41,30 @@ exports.apiHeader = function(req, res, next){
 	});
 
 }
+exports.getList = function(req, res, next){
+	r.db(db_db).table(db_table).pluck('id').
+	run(rdb, function(err, cursor){
+		if(err){
+			res.status(404).type('json').end(res.Body+', "routeVerb" : "List", "status" : "error", "statusMessage" : "id ['
+				+req.params.id+ '] does not exist"}}');
+			//throw err;
+		}
+		else{
+			cursor.toArray( function(err, result){
+			if(err){
+				throw err;
+			}
+			for(index in result){
+				result[index].url=api_host+"/id/"+db_db+"/"+result[index].id;
+			}
+			res.status(200).type('json').send(res.Body+', "routeVerb" : "List", "status" : "ok"} , "objects" : [ '+
+				JSON.stringify(result)+
+				']}');
+			});
+		};
+		//next(); end here do not chain onwards
+	});
+};
 
 exports.getRecord = function(req, res, next){
 	r.db(db_db).table(db_table).

@@ -13,6 +13,8 @@ app.use(routes.apiHeader);
 
 app.get('/id/objects/all/', routes.getAll);
 
+app.get('/id/objects/list/', routes.getList);
+
 app.get('/id/objects/:id', routes.getRecord);
 
 app.get('/id/objects/*', routes.identifyAPI); 

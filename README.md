@@ -3,7 +3,7 @@
 * README.md - this file
 * [Discussion.md](https://github.com/museums-io/API-PMH/blob/master/Discussion.md) - some background on implementation thoughts
 * [PermanentURIs.md](https://github.com/museums-io/API-PMH/blob/master/PermanentURIs.md) - some background thoughts on coexistence of Permanent URIs and API in same URI space
-* javascript - directory contains an early test implementation of an API-PMH server based on [Nodejs](http://nodejs.org/), [Expressjs](http://expressjs.com/) and [RethinkDB](http://rethinkdb.com/)
+* js-express-rethinkdb - directory contains an early test implementation of an API-PMH server - Javascipt code on [Nodejs](http://nodejs.org/), using [Expressjs](http://expressjs.com/) and [RethinkDB](http://rethinkdb.com/)
 
 ## API-PMH
 
