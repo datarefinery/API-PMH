@@ -65,9 +65,10 @@ limit = number of records to return in any one request, default 500 (although ha
 
 page = page to get from the larger sequence
 
+fromdate = selectively harvesting, ISO8601 date/time or sub part thereof
+
 fields = optional, will always default to all, but if implemented can be used to limit response to only include specific fields
 
-??version = maybe we want the caller to be able to specify our API version?
 
 ### API-PMH Reponses
 
@@ -104,15 +105,17 @@ apipmh: {
         description: "beta test API-PMH implementation",
         publisher: "The Museum",
         contactEmail: "nowhere@nowhere",
-        records: 198033,
-        pages: 1980,
-        limit: 100,
+        fromDate: "2014-01-01",
+        totalRecords: 35356,
+        pages: 176,
+        limit: 200,
+        routeVerb: "getAll",
         status: "ok",
         link: {
-        next: "http://localhost:3000/objects/id/all/?limit=100&page=11",
-        prev: "http://localhost:3000/objects/id/all/?limit=100&page=9",
-        first: "http://localhost:3000/objects/id/all/?limit=100&page=0",
-        last: "http://localhost:3000/objects/id/all/?limit=100&page=1980"
+        next: "http://localhost:3000/id/objects/all/?limit=200&page=11",
+        prev: "http://localhost:3000/id/objects/all/?limit=200&page=9",
+        first: "http://localhost:3000/id/objects/all/?limit=200&page=0",
+        last: "http://localhost:3000/id/objects/all/?limit=200&page=176"
 },
 objects:[
 	{ values },
