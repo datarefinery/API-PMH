@@ -54,12 +54,14 @@ Will only be HTTP GETs as they are read only.
 
 ### API-PMH Request Parameters
 
-limit = number of records to return in any one request, default 500 (although have to consider how this works with streaming)
+limit = number of records to return in any one request, (defaults to 500?)
+  (although have to consider how this works with streaming)
 
-page = page to get from the larger sequence
+page = page to get from the larger sequence (defaults to 0)
 
-fromdate = selectively harvesting, ISO8601 date/time or sub part thereof
+fromdate = selectively harvesting, ISO8601 date/time or sub part thereof (defaults to 2000-01-01T00:00:00 ?)
 
+set = choose a set from those available (always defaults to 0)
 fields = optional, will always default to all, but if implemented can be used to limit response to only include specific fields
 
 
