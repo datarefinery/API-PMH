@@ -6,6 +6,6 @@
   "dependencies": {
     "express": "4.x",
     "morgan": "^1.3.1",
-    "rethinkdb": "1.4.x"
+    "rethinkdb": "1.5.x"
   }
 }

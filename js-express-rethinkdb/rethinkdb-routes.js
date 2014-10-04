@@ -10,6 +10,7 @@ var db_table = 'remap';
 var db_limit = 200; /* number of 'records' to get for a getAll call */
 var db_max_limit = 10000; /* maximum limit we'll take as a request */
 var db_pages = 0;
+var db_fromdate = '2014-10-01T00:00:00';
 
 /* open database */
 var rdb = null;
@@ -20,8 +21,11 @@ r.connect({host: db_host, port: db_port}, function(err, conn) {
 
 /* these are the routes calls */
 exports.apiHeader = function(req, res, next){
-	
-	r.db(db_db).table(db_table).count().
+	/* deal with from date */
+	if(req.query.fromdate){db_fromdate = req.query.fromdate;};
+	r.db(db_db).table(db_table).
+	filter(function(record){return r.ISO8601(record('RecordDate'),{defaultTimezone: '+01:00'}).ge(r.ISO8601(db_fromdate,{defaultTimezone: '+01:00'}));}).
+	count().
 	run(rdb, function(err, result){
 		if(err){
 			throw err;
@@ -33,6 +37,7 @@ exports.apiHeader = function(req, res, next){
 		'"description": "beta test API-PMH implementation",' +
 		'"publisher": "The Museum",' +
 		'"contactEmail": "nowhere@nowhere",' +
+		'"fromDate" : "'+db_fromdate+'",'+		
 		'"totalRecords" : '+result+','+
 		'"pages" : '+db_pages+','+
 		'"limit" : '+limit; /* always need to finish off header with next in chain */
@@ -45,7 +50,7 @@ exports.getList = function(req, res, next){
 	r.db(db_db).table(db_table).pluck('id').
 	run(rdb, function(err, cursor){
 		if(err){
-			res.status(404).type('json').end(res.Body+', "routeVerb" : "List", "status" : "error", "statusMessage" : "id ['
+			res.status(404).type('json').end(res.Body+', "routeVerb" : "getList", "status" : "error", "statusMessage" : "id ['
 				+req.params.id+ '] does not exist"}}');
 			//throw err;
 		}
@@ -57,7 +62,7 @@ exports.getList = function(req, res, next){
 			for(index in result){
 				result[index].url=api_host+"/id/"+db_db+"/"+result[index].id;
 			}
-			res.status(200).type('json').send(res.Body+', "routeVerb" : "List", "status" : "ok"} , "objects" : [ '+
+			res.status(200).type('json').send(res.Body+', "routeVerb" : "getList", "status" : "ok"} , "objects" : [ '+
 				JSON.stringify(result)+
 				']}');
 			});
@@ -70,7 +75,7 @@ exports.getRecord = function(req, res, next){
 	r.db(db_db).table(db_table).
 	get(req.params.id).
 	run(rdb, function(err, result){
-		if(err){
+		if(result === null){
 			res.status(404).type('json').end(res.Body+', "routeVerb" : "getRecord", "status" : "error", "statusMessage" : "id ['
 				+req.params.id+ '] does not exist"}}');
 			//throw err;
@@ -86,6 +91,7 @@ exports.getRecord = function(req, res, next){
 
 exports.getAll = function(req, res, next){
 /* do all the pagination calculations */
+
 	/* figure out the pages */
     if(req.query.page){
     	var page = parseInt(req.query.page);
@@ -111,6 +117,7 @@ exports.getAll = function(req, res, next){
 	/* ok we've got all the pagination goodies now make the db call */	
 	r.db(db_db).table(db_table).
 	orderBy({index: "id"}).
+	filter(function(record){return r.ISO8601(record('RecordDate'),{defaultTimezone: '+01:00'}).ge(r.ISO8601(db_fromdate,{defaultTimezone: '+01:00'}));}).
 	slice(skip,skip+limit).
 	run(rdb, {arrayLimit: 250000}, function(err, cursor){
 		if(err){
