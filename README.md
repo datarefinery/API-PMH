@@ -33,7 +33,7 @@ Identify | `id/<entity>/`| identify API | at the root entity url 'identify' is i
 ListIdentifiers|`id/<entity>/list/`| list all identifiers | return a list of all entity identifiers (preferably as opendata URIs), paging/sequencing & filtering can apply|
 GetRecord |`id/<entity>/<id>`| get record|
 ListRecords|`id/<entity>/all/`| get all records | get all records, paging/sequencing & filtering applies |
-ListSets| `id/<entity>/subset/`| identify subsets | subsets listing (if any)|
+ListSets| `id/<entity>/sets/`| identify sets | subsets listing (0/default must be present)|
 ListMetadataFormats | `id/<entity>/` | n/a | formats info should primarily be handled by Header->Content-Type's. Schema's on the other hand (which are sometimes handled here, in ListMetadataFormats, by OAI-PMH) should be handled seperately. |
 
 ### API-PMH Requests
@@ -49,15 +49,8 @@ Will only be HTTP GETs as they are read only.
 
 `id/<entity>/id/all/` get all records 
 
-`id/<entity>/subset/` identify available sub-sets
+`id/<entity>/sets/` identify available sets
 
-`id/<entity>/subset/<sid>/` get sub-set identify record  
-
-`id/<entity>/subset/<sid>/list/` get all record `<id>`'s in subset
-
-`id/<entity>/subset/<sid>/all/` get all records in subset
-
-?? `id/<entity>/subset/<sid>/<id>` would get record in set (is this needed as a test? e.g. subset/id could then return 404 if id is not in subset)
 
 ### API-PMH Request Parameters
 

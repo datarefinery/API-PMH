@@ -8,6 +8,7 @@ The purpose of this document is to outline some of the rationale for arriving at
 * JSON format data
 * Paging, Sequencing, Next/Previous etc
 * Sets, Subsets or?
+* Subset implemenation
 * Implementing subsets
 * Selective harvesting
 * What about schema?
@@ -56,6 +57,37 @@ Using permanent URI ids in the form of `http://<host-domain>/<entity>/<id>` impl
 It flows then that when you address an `<entity>` you are already talking about the overall 'set' (all the records for that entity), therefore any 'collections' or 'sets' defined under/below this top level 'set' must logically be a subset of the larger set. 
 
 'Pedants of the world unite..' :-)  
+
+Having written the section below I've now changd my mind.. read on to find out why..
+
+## Set implementation
+
+A 'set' in OAI-PMH is pretty much a 'first class' citizen.. it can describe 'a set' and many of its characteristics.
+
+In API-PMH there are two fundamental things which we want to be able 'switch' between when we are dealing with an `<entity>`. 
+
+One is the format - json, xml, html - which is relatively straight forward as we've described (e.g. accept headers, extensions and/or format= request parametrs). 
+
+Two, is schema's, which again, when taken by itself, is also relatively straighforward (e.g. schema's are embedded in the responses if they are present and this can be true for json or xml).
+
+It's when you'd like to switch both at the same time, and in any combination, that from a consumer perspective of the API it might beginning to get confusing.. how does the consumer know whats available without making multiple 'test calls' to find out..
+
+A set at it's simplest level should allow you to do this.. i.e. when you call a named set both the format and schema should be configured for that set. So it follows that there should always be at least 1 set for any `<entity>` - it being the 'default' or set id 0 (zero). It also follows that set 0 is not a subset - it is always all records.
+
+From the 'consumer' perspective then a single call to 'identifySets' should answer the 'what's available' question in 'one hit'. Not surprisingly this is how, in principle, that the same problem is overcome in OAI-PMH - where not here to reinvent the wheel, we definitely want to capture the well thought out principles of AOI-PMH.
+
+Extra characteristics for a set might also be described and implemented (e.g. a filtering or searching function) which *would* create a subset - these continue to be called 'sets', but we'll rely on the 'set definition' (to be returned by 'identifySet') to inform our callers of this.
+
+Having described the above it seems, at this stage, that 'calling sets' should be a request parameter (as in '&set=default') rather than a URI parameter. So in implementation set semantics would look like:
+/id/`<entity>'/sets/ will return a list of available sets (with their names and ids), and then
+/id/`<entity>'/list/?set=`<name/id>` or
+/id/`<entity>'/all/?set=`<name/id>`
+will allow you to use verbs on specific sets
+
+In keeping with the 'keep it simple' (for the consumer) principle we will impose that every implementation for an `<entity>` responds to /sets/ and returns at least one set named 'default' with an id of 0.
+
+
+
 
 ## Implementing subsets
 Observationally it should be quite simple using the current crop of 'noSQL databases' to implement subsets because `<entity>/<subset>` maps quite neatly into their own data structures:
