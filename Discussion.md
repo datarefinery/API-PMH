@@ -79,9 +79,13 @@ From the 'consumer' perspective then a single call to 'identifySets' should answ
 Extra characteristics for a set might also be described and implemented (e.g. a filtering or searching function) which *would* create a subset - these continue to be called 'sets', but we'll rely on the 'set definition' (to be returned by 'identifySet') to inform our callers of this.
 
 Having described the above it seems, at this stage, that 'calling sets' should be a request parameter (as in '&set=default') rather than a URI parameter. So in implementation set semantics would look like:
-/id/`<entity>'/sets/ will return a list of available sets (with their names and ids), and then
+
+/id/`<entity>`/sets/ will return a list of available sets (with their names and ids), and then
+
 /id/`<entity>'/list/?set=`<name/id>` or
+
 /id/`<entity>'/all/?set=`<name/id>`
+
 will allow you to use verbs on specific sets
 
 In keeping with the 'keep it simple' (for the consumer) principle we will impose that every implementation for an `<entity>` responds to /sets/ and returns at least one set named 'default' with an id of 0.
