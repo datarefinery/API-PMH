@@ -1,7 +1,7 @@
 var r = require("rethinkdb");
 
 /* config */
-var api_host = 'http://localhost:3000';
+var api_host = 'http://localhost:3000';  /* host plus based path (if any) - no trailing slash */
 
 var db_host = 'localhost';
 var db_port = '28015';
@@ -9,8 +9,9 @@ var db_db = 'objects';
 var db_table = 'remap';
 var db_limit = 200; /* number of 'records' to get for a getAll call */
 var db_max_limit = 10000; /* maximum limit we'll take as a request */
-var db_pages = 0;
-var db_fromdate = '2014-10-01T00:00:00';
+var db_pages = 0;         /* will hold calculate pages based on records/limit */
+var db_fromdate = ''; /* default from date, make even earlier if necessary */
+var db_defaulttimezone = '+00:00' /* change if you care about the time zone dates are calculated using */
 
 /* open database */
 var rdb = null;
@@ -19,18 +20,30 @@ r.connect({host: db_host, port: db_port}, function(err, conn) {
 	else{rdb = conn;}
 });
 
+
 /* these are the routes calls */
 exports.apiHeader = function(req, res, next){
 	/* deal with from date */
-	if(req.query.fromdate){db_fromdate = req.query.fromdate;};
-	r.db(db_db).table(db_table).
-	filter(function(record){return r.ISO8601(record('RecordDate'),{defaultTimezone: '+01:00'}).ge(r.ISO8601(db_fromdate,{defaultTimezone: '+01:00'}));}).
+	db_fromdate = '';
+	if(req.query.fromdate)
+		{db_fromdate = req.query.fromdate;};
+	r.db(db_db).table(db_table).filter(
+		function(record){
+			if(db_fromdate != ''){
+			return r.ISO8601(record('RecordDate'),{defaultTimezone: db_defaulttimezone})
+			.ge(r.ISO8601(db_fromdate,{defaultTimezone: db_defaulttimezone}));
+		 	}
+		 	else{
+		 		return record;
+		 	}
+            }
+	).
 	count().
 	run(rdb, function(err, result){
 		if(err){
 			throw err;
 		};
-		limit = calculatelimit(req.query.limit, db_limit, db_max_limit);
+		limit = calculateLimit(req.query.limit, db_limit, db_max_limit);
 		db_pages = parseInt(result/limit);
 		res.Body = '{ "apipmh" :' +
 		'{"title": "Collection Objects API (API-PMH)",' +
@@ -46,6 +59,8 @@ exports.apiHeader = function(req, res, next){
 	});
 
 }
+
+
 exports.getList = function(req, res, next){
 	r.db(db_db).table(db_table).pluck('id').
 	run(rdb, function(err, cursor){
@@ -70,6 +85,7 @@ exports.getList = function(req, res, next){
 		//next(); end here do not chain onwards
 	});
 };
+
 
 exports.getRecord = function(req, res, next){
 	r.db(db_db).table(db_table).
@@ -104,9 +120,13 @@ exports.getAll = function(req, res, next){
     	var ppage = -1;
     }
 	/* figure out limit */
-    limit = calculatelimit(req.query.limit, db_limit, db_max_limit);
-    linkuri = api_host+req.path+'?limit='+limit+'&page=';
-    hdrlinks = generateHeaderLinks(linkuri, page, npage, ppage, db_pages)	//console.log(limit);
+    limit = calculateLimit(req.query.limit, db_limit, db_max_limit);
+    linkuri = api_host+req.path+'?limit='+limit;
+    if(db_fromdate != ''){ 
+    	linkuri = linkuri+'&fromdate='+db_fromdate;
+    };
+    linkuri=linkuri+'&page=';
+    hdrlinks = generateHeaderLinks(linkuri, page, npage, ppage, db_pages)
 
 	/* now we have limit and page we can built next/previous and skip values */
 	nexturi = '';
@@ -117,7 +137,16 @@ exports.getAll = function(req, res, next){
 	/* ok we've got all the pagination goodies now make the db call */	
 	r.db(db_db).table(db_table).
 	orderBy({index: "id"}).
-	filter(function(record){return r.ISO8601(record('RecordDate'),{defaultTimezone: '+01:00'}).ge(r.ISO8601(db_fromdate,{defaultTimezone: '+01:00'}));}).
+	filter(function(record){
+			if(db_fromdate != ''){
+			return r.ISO8601(record('RecordDate'),{defaultTimezone: db_defaulttimezone})
+			.ge(r.ISO8601(db_fromdate,{defaultTimezone: db_defaulttimezone}));
+		 	}
+		 	else{
+		 		return record;
+		 	}
+		 }
+	).
 	slice(skip,skip+limit).
 	run(rdb, {arrayLimit: 250000}, function(err, cursor){
 		if(err){
@@ -150,19 +179,20 @@ exports.identifyAPI = function(req, res, next){
 }; 
 
 
-
 /** these are general helper functions **/
-var calculatelimit = function(limit, std, max){
+var calculateLimit = function(limit, std, max){
 	if(limit){
 		if(limit > max){
-		return max;
+			return max;
 		}else{
-		return parseInt(limit);	
+			return parseInt(limit);	
 		};
 	}
 	return std;
 	
 };
+
+
 var generateHeaderLinks = function(uri, page, npage, ppage, dbpages){
 	var hdrlinks = "";
 	if(npage < dbpages){
@@ -173,8 +203,6 @@ var generateHeaderLinks = function(uri, page, npage, ppage, dbpages){
 	}
 	hdrlinks += ', <'+uri+'0>; rel="first"';
 	hdrlinks += ', <'+uri+dbpages+'>; rel="last"';
-
 	return hdrlinks;
-	
 };
 	

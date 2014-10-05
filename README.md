@@ -59,7 +59,7 @@ limit = number of records to return in any one request, (defaults to 500?)
 
 page = page to get from the larger sequence (defaults to 0)
 
-fromdate = selectively harvesting, ISO8601 date/time or sub part thereof (defaults to 2000-01-01T00:00:00 ?)
+fromdate = selectively harvesting, ISO8601 date/time or sub part thereof (defaults to null or '')
 
 set = choose a set from those available (always defaults to 0)
 fields = optional, will always default to all, but if implemented can be used to limit response to only include specific fields
