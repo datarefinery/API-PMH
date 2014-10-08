@@ -1,0 +1,16 @@
+{
+  "apipmh": {
+    "apihost": "http://localhost:3000",
+    "limit" : 200,
+    "max_limit" : 10000,
+    "rethinkdb": {
+      "port": 28015,
+      "db": "objects",
+      "table" : "published"  
+    },
+    "date" : {
+      "fromdate": null,
+      "timezone": "+00:00"
+    }
+  }  
+}
