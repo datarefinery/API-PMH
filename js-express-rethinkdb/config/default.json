@@ -2,15 +2,21 @@
   "apipmh": {
     "apihost": "http://localhost:3000",
     "limit" : 200,
-    "max_limit" : 10000,
+    "maxlimit" : 10000,
     "rethinkdb": {
       "port": 28015,
       "db": "objects",
-      "table" : "published"  
+      "table" : "remap"  
     },
     "date" : {
       "fromdate": null,
       "timezone": "+00:00"
+    },
+    "identify": {
+      "title": "Collection Objects API (API-PMH)",
+      "description": "beta test API-PMH implementation",
+      "publisher": "The Museum",
+      "contactEmail": "nowhere@nowhere"
     }
   }  
 }

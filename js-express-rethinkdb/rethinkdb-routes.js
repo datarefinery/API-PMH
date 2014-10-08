@@ -3,19 +3,17 @@ var config = require("config");
 
 
 /* config */
-var dbConfig = config.get('apipmh');
-
 var api_host = config.get('apipmh.apihost');  /* host plus based path (if any) - no trailing slash */
-
+var api_identify = JSON.stringify(config.get('apipmh.identify')).replace(/[\{\}]/g,'');
 var db_host = 'localhost';
 var db_port = config.get('apipmh.rethinkdb.port');
 var db_db = config.get('apipmh.rethinkdb.db');
-var db_table = config.get('apipmh.rethinkdb.table');;
-var db_limit = 200; /* number of 'records' to get for a getAll call */
-var db_max_limit = 10000; /* maximum limit we'll take as a request */
-var db_pages = 0;         /* will hold calculate pages based on records/limit */
-var db_fromdate = ''; /* default from date, make even earlier if necessary */
-var db_defaulttimezone = '+00:00' /* change if you care about the time zone dates are calculated using */
+var db_table = config.get('apipmh.rethinkdb.table');
+var db_limit = config.get('apipmh.limit'); /* number of 'records' to get for a getAll call */
+var db_max_limit = config.get('apipmh.maxlimit'); /* maximum limit we'll take as a request */
+var db_fromdate = config.get('apipmh.date.fromdate'); /* default from date, make even earlier if necessary */
+var db_defaulttimezone = config.get('apipmh.date.timezone'); /* change if you care about the time zone dates are calculated using */
+var db_pages = 0;         /* will hold calculated pages based on records/limit */
 
 /* open database */
 var rdb = null;
@@ -47,14 +45,10 @@ exports.apiHeader = function(req, res, next){
 	run(rdb, function(err, result){
 		if(err){
 			throw err;
-		};
+		}; 
 		limit = calculateLimit(req.query.limit, db_limit, db_max_limit);
 		db_pages = parseInt(result/limit);
-		res.Body = '{ "apipmh" :' +
-		'{"title": "Collection Objects API (API-PMH)",' +
-		'"description": "beta test API-PMH implementation",' +
-		'"publisher": "The Museum",' +
-		'"contactEmail": "nowhere@nowhere",' +
+		res.Body = '{ "apipmh" : {' + api_identify + ',' +
 		'"fromDate" : "'+db_fromdate+'",'+		
 		'"totalRecords" : '+result+','+
 		'"pages" : '+db_pages+','+
