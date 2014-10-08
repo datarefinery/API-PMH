@@ -21,7 +21,7 @@ So when I talk about 'API standards' (quotes intended) I'm actually talking abou
 
 The primary drivers for my coalesced 'best practice' are, in order, ease of use, ease of development, machine efficient.
 
-Some refs: [by Matt Kirby](http://mark-kirby.co.uk/2013/creating-a-true-rest-api/), [at Appnexus blog](http://techblog.appnexus.com/2012/on-restful-api-standards-just-be-cool-11-rules-for-practical-api-development-part-1-of-2/)
+Some refs: [Thomas Hunter at CodePlanet](http://codeplanet.io/principles-good-restful-api-design/) [Programmable Web](http://www.programmableweb.com/news/follow-these-simple-design-rules-to-make-your-api-more-usable/how-to/2014/09/19?utm_content=buffer016f2&utm_medium=social&utm_source=twitter.com&utm_campaign=buffer) [by Matt Kirby](http://mark-kirby.co.uk/2013/creating-a-true-rest-api/), [at Appnexus blog](http://techblog.appnexus.com/2012/on-restful-api-standards-just-be-cool-11-rules-for-practical-api-development-part-1-of-2/)
 
 ## JSON format data
 JSON data by 'default' does not preclude transporting any other data types.
@@ -76,19 +76,20 @@ A set at it's simplest level then should allow you to do this.. i.e. when you ca
 
 From the 'consumer' perspective then a single call to 'identifySets' should answer the 'what's available' question in 'one hit'. Not surprisingly this is how, in principle, that the same problem is overcome in OAI-PMH - and we're not here to reinvent the wheel, we definitely want to capture the well thought out principles of OAI-PMH.
 
-Extra characteristics for a set might also be described and implemented (e.g. a filtering or searching function) which *would* create a subset - these continue to be called 'sets', but we'll rely on the 'set definition' (to be returned by 'identifySet') to inform our callers of this.
+Extra characteristics for a set might also be described and implemented (e.g. a filtering or searching function) which *could* create a subset - these continue to be called 'sets', but we'll rely on the 'set definition' (to be returned by 'identifySet') to inform our callers of this.
 
 Having described the above it seems, at this stage, that 'calling sets' should be a request parameter (as in '&set=default') rather than a URI parameter. So in implementation set semantics would look like:
 
 /id/`<entity>`/sets/ will return a list of available sets (with their names and ids), and then
 
-/id/`<entity>'/list/?set=`<name/id>` or
+/id/`<entity>`/list/?set=`<name/id>` or
 
-/id/`<entity>'/all/?set=`<name/id>`
+/id/`<entity>`/all/?set=`<name/id>`
 
 will allow you to use verbs on specific sets
 
-In keeping with the 'keep it simple' (for the consumer) principle we will impose that every implementation for an `<entity>` responds to /sets/ and returns at least one set named 'default' with an id of 0.
+
+In keeping with the 'keep it simple' (for the consumer) principle we will impose that every implementation for an `<entity>` responds to /sets/ and returns at least one set named 'default' with an id of 0. And also that all verb calls will default to set=0. From an implemenation perspective this is verb simple - it means the only imposed minimum is that a static response has to be crafted as a response to the verb  /sets/
 
 
 

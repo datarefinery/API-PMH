@@ -1,12 +1,16 @@
 var r = require("rethinkdb");
+var config = require("config");
+
 
 /* config */
-var api_host = 'http://localhost:3000';  /* host plus based path (if any) - no trailing slash */
+var dbConfig = config.get('apipmh');
+
+var api_host = config.get('apipmh.apihost');  /* host plus based path (if any) - no trailing slash */
 
 var db_host = 'localhost';
-var db_port = '28015';
-var db_db = 'objects';
-var db_table = 'remap';
+var db_port = config.get('apipmh.rethinkdb.port');
+var db_db = config.get('apipmh.rethinkdb.db');
+var db_table = config.get('apipmh.rethinkdb.table');;
 var db_limit = 200; /* number of 'records' to get for a getAll call */
 var db_max_limit = 10000; /* maximum limit we'll take as a request */
 var db_pages = 0;         /* will hold calculate pages based on records/limit */
@@ -21,6 +25,7 @@ r.connect({host: db_host, port: db_port}, function(err, conn) {
 });
 
 
+/* these are the routes calls */
 /* these are the routes calls */
 exports.apiHeader = function(req, res, next){
 	/* deal with from date */
@@ -55,10 +60,13 @@ exports.apiHeader = function(req, res, next){
 		'"pages" : '+db_pages+','+
 		'"limit" : '+limit; /* always need to finish off header with next in chain */
 
-		next();
+		next(); 
 	});
 
 }
+//exports.listSets = function(req, res, next){
+	/* deal with set requests */
+//}
 
 
 exports.getList = function(req, res, next){
