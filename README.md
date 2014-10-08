@@ -5,6 +5,8 @@
 * [PermanentURIs.md](https://github.com/museums-io/API-PMH/blob/master/PermanentURIs.md) - some background thoughts on coexistence of Permanent URIs and API in same URI space
 * js-express-rethinkdb - directory contains an early test implementation of an API-PMH server - Javascipt code on [Nodejs](http://nodejs.org/), using [Expressjs](http://expressjs.com/) and [RethinkDB](http://rethinkdb.com/)
 
+## Demo
+There is a test demo of the node+express+rethinkdb implementation [here](http://data.fitzmuseum.cam.ac.uk/#tab_apipmh)
 ## API-PMH
 
 API-PMH is a proposal for implementing an updated 'protocol for metadata harvesting', inspired by [OAI-PMH](http://www.openarchives.org/pmh/), using current technology 'standards' & practice, including:
