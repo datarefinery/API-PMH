@@ -8,8 +8,7 @@ The purpose of this document is to outline some of the rationale for arriving at
 * JSON format data
 * Paging, Sequencing, Next/Previous etc
 * Sets, Subsets or?
-* Subset implemenation
-* Implementing subsets
+* Sub implemenation
 * Selective harvesting
 * What about schema?
 * What about API versioning?
@@ -66,7 +65,7 @@ A 'set' in OAI-PMH is pretty much a 'first class' citizen.. it can describe 'a s
 
 In API-PMH there are two fundamental things which we want to be able 'switch' between when we are dealing with an `<entity>`. 
 
-One is the format - json, xml, html - which is relatively straight forward as we've described (e.g. accept headers, extensions and/or format= request parametrs). 
+One is the format - json, xml, html - which is relatively straight forward as we've described (e.g. accept headers, extensions and/or format= request parameters). 
 
 Two, is schema's, which again, when taken by itself, is also relatively straighforward (e.g. schema's are embedded in the responses if they are present and this can be true for json or xml).
 
@@ -89,13 +88,10 @@ Having described the above it seems, at this stage, that 'calling sets' should b
 will allow you to use verbs on specific sets
 
 
-In keeping with the 'keep it simple' (for the consumer) principle we will impose that every implementation for an `<entity>` responds to /sets/ and returns at least one set named 'default' with an id of 0. And also that all verb calls will default to set=0. From an implemenation perspective this is verb simple - it means the only imposed minimum is that a static response has to be crafted as a response to the verb  /sets/
+In keeping with the 'keep it simple' (for the consumer) principle we will impose that every implementation for an `<entity>` responds to /sets/ and returns at least one set named 'default' with an id of 0. And also that all verb calls will default to set=0. From an implemenation perspective this is very simple - it means the only imposed minimum is that a static response has to be crafted as a response to the verb  /sets/
 
 
-
-
-## Implementing subsets
-Observationally it should be quite simple using the current crop of 'noSQL databases' to implement subsets because `<entity>/<subset>` maps quite neatly into their own data structures:
+Another observation is that it should be quite simple using the current crop of 'noSQL databases' to implement subsets because `<entity>/<subset>` maps quite neatly into their own data structures:
 * [Elasticsearch](http://www.elasticsearch.org/) = index/type
 * [MongoDB](http://www.mongodb.org/) = database/collection
 * [RethinkDB](http://rethinkdb.com/) = database/table
